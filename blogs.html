@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | Lokesh Taduri</title>
+    
+    <!-- Add this favicon code -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='8' fill='%231a1a1a'/><text x='50' y='70' font-size='70' font-weight='bold' font-style='italic' fill='white' text-anchor='middle' font-family='Inter, sans-serif'>L</text></svg>">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* --- General Setup & Reset --- */
+        :root {
+            --text-color-dark: #000; 
+            --text-color-light: #666; 
+            --link-color: #0073e6;
+            --border-color: #ddd;
+            --background-color: #fff;
+            --page-width: 1200px;
+            --hover-underline-color: #e0e0e0; 
+            
+            /* --- Brand Colors --- */
+            --linkedin-blue: #0A66C2;
+            --github-black: #181717;
+            --google-scholar-orange: #f9ab00;
+            --gmail-red: #EA4335;
+            --location-color: #555;
+            --orcid-green: #A6CE39;
+            
+            /* Header height */
+            --header-height: 60px; 
+            --sidebar-width: 340px; 
+
+            /* Profile Alignment Variables */
+            --title-center-target: 130px; 
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color-dark);
+            line-height: 1.65; 
+            font-size: 17px;
+            overflow-x: hidden; 
+        }
+
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+        .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.3em;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-color-dark);
+    letter-spacing: 0.5px;
+    position: absolute;
+    left: 20px;
+}
+
+.logo-icon {
+    width: 32px;
+    height: 32px;
+    background-color: #1a1a1a;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    font-style: italic;
+    font-weight: 700;
+    font-size: 20px;
+}
+        /* --- Fixed Header/Navigation --- */
+        .header-wrapper {
+            position: fixed; 
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--header-height);
+            background-color: var(--background-color);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000; 
+        }
+        
+        .top-header {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center; 
+            max-width: var(--page-width);
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .site-title {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-size: 1.3em;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-color-dark);
+            letter-spacing: 0.5px;
+            position: absolute;
+            left: 20px;
+        }
+
+        .site-title a {
+            color: var(--text-color-dark);
+        }
+
+        .main-nav {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-left: 500px;
+        }
+        
+        .main-nav a {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-weight: 500;
+            font-size: 1em; 
+            position: relative; 
+            padding-bottom: 0; 
+            color: var(--text-color-dark); 
+            transition: color 0.3s ease;
+        }
+        
+        .main-nav a:hover {
+            color: var(--link-color); 
+        }
+
+        .main-nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0; 
+            height: 3px; 
+            background-color: var(--hover-underline-color); 
+            transition: width 0.3s ease;
+        }
+
+        .main-nav a:hover::after {
+            width: 100%; 
+        }
+
+        /* --- Main Layout --- */
+        .content-wrapper {
+            max-width: var(--page-width);
+            margin: 0 auto;
+            padding: 20px 20px 40px 20px;
+            display: flex;
+            gap: 40px;
+            padding-top: calc(var(--header-height) + 30px); 
+            position: relative;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: var(--header-height);
+            left: calc(50% - (var(--page-width) / 2) + 20px); 
+            width: 300px;
+            height: calc(100vh - var(--header-height)); 
+            flex-shrink: 0;
+            padding-right: 20px;
+            overflow-y: hidden; 
+        }
+        
+        .main-content {
+            margin-left: var(--sidebar-width); 
+            flex-grow: 1;
+            padding-bottom: 40px;
+            overflow-y: auto; 
+        }
+        
+        /* --- Sidebar Profile Card --- */
+        .profile-card {
+            margin-top: 80px; 
+            margin-bottom: 30px;
+            position: relative; 
+        }
+
+        .profile-name {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-size: 1.35em; 
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-align: left;
+            padding-left: 5px; 
+            color: var(--text-color-dark);
+            letter-spacing: -0.3px;
+        }
+
+        .profile-pic-container {
+            width: 240px; 
+            height: 240px;
+            background-color: #fff; 
+            border-radius: 50%;
+            margin: 0 0 20px 0; 
+            overflow: hidden;
+            border: 1px solid #333;
+            padding: 4px;
+        }
+        
+        .profile-pic-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            border-radius: 50%;
+        }
+
+        .profile-bio {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-size: 0.95em;
+            color: var(--text-color-dark); 
+            margin-bottom: 25px;
+            text-align: left;
+            padding-left: 5px;
+            line-height: 1.6;
+        }
+
+        .sidebar-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.95em;
+        }
+
+        .sidebar-links li {
+            padding: 6px 0;
+            display: flex;
+            align-items: baseline;
+            color: var(--text-color-dark);
+            transition: transform 0.2s ease;
+        }
+
+        .sidebar-links li:hover {
+            transform: translateX(5px);
+        }
+        
+        .sidebar-links i {
+            width: 20px;
+            text-align: center;
+            margin-right: 8px;
+        }
+
+        .fa-map-marker-alt, .fa-graduation-cap, .fa-file-alt {
+            color: var(--location-color) !important;
+        }
+        .fa-google {
+            color: var(--gmail-red) !important;
+        }
+        .fa-google.scholar { 
+            color: var(--google-scholar-orange) !important;
+        }
+        .fa-github {
+            color: var(--github-black) !important;
+        }
+        .fa-linkedin {
+            color: var(--linkedin-blue) !important;
+        }
+        
+        .sidebar-links a {
+            color: var(--text-color-dark);
+            transition: color 0.3s ease;
+        }
+
+        .sidebar-links a:hover {
+            color: var(--link-color);
+        }
+
+        /* --- Blog Specific Styles --- */
+        .blog-section {
+            padding: 0;
+        }
+
+        .blog-section h1 {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-size: 2.4em;
+            font-weight: 700;
+            margin-top: 0;
+            margin-bottom: 40px;
+            line-height: 1.25;
+            letter-spacing: -0.5px;
+        }
+
+        .blog-post {
+            margin-bottom: 45px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .blog-post:last-child {
+            border-bottom: none;
+        }
+
+        .blog-post-title {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-size: 1.4em;
+            font-weight: 600;
+            color: var(--text-color-dark);
+            margin: 0 0 8px 0;
+            line-height: 1.4;
+        }
+
+        .blog-post-title a {
+            color: var(--text-color-dark);
+            transition: color 0.3s ease;
+        }
+
+        .blog-post-title a:hover {
+            color: var(--link-color);
+        }
+
+        .blog-post-meta {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-size: 0.9em;
+            color: var(--text-color-light);
+            margin-bottom: 10px;
+        }
+
+        .blog-post-excerpt {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-size: 1em;
+            line-height: 1.7;
+            color: var(--text-color-dark);
+            margin: 0;
+        }
+
+        /* --- Responsive Design --- */
+        
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 250px;
+            }
+            
+            .profile-pic-container {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .content-wrapper {
+                gap: 30px;
+            }
+            
+            .main-nav {
+                gap: 15px;
+                margin-left: 220px;
+            }
+            
+            .main-nav a {
+                font-size: 0.9em;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                overflow-x: hidden;
+                font-size: 16px;
+            }
+
+            .header-wrapper {
+                position: static;
+                height: auto;
+            }
+            .sidebar {
+                position: static;
+                margin-left: 0;
+                left: auto;
+                width: 100%; 
+                height: auto;
+                padding-right: 0;
+                border-bottom: 1px solid var(--border-color);
+                padding-bottom: 20px;
+            }
+            .main-content {
+                margin-left: 0; 
+                padding: 20px 15px 40px;
+            }
+
+            .content-wrapper {
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px 15px 40px;
+            }
+
+            .top-header {
+                flex-direction: column; 
+                gap: 15px;
+                padding: 15px 20px;
+                justify-content: center;
+            }
+            .site-title {
+                position: static; 
+                margin-right: 0; 
+                text-align: center;
+                font-size: 1.2em;
+            }
+            .main-nav {
+                justify-content: center; 
+                flex-wrap: wrap;
+                margin-left: 0;
+                gap: 10px;
+            }
+            .main-nav a {
+                margin: 0 8px;
+                font-size: 0.9em;
+            }
+
+            .profile-card {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-top: 20px;
+            }
+            .profile-pic-container {
+                width: 180px;
+                height: 180px;
+                margin: 0 auto 15px auto;
+            }
+            .profile-name {
+                text-align: center;
+                padding-left: 0;
+                font-size: 1.4em;
+            }
+            .profile-bio {
+                text-align: center;
+                padding-left: 0;
+            }
+            .sidebar-links {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 12px 20px;
+                font-size: 0.9em;
+                margin-top: 15px;
+            }
+            .sidebar-links li {
+                padding: 0;
+            }
+            .sidebar-links li:hover {
+                transform: none;
+            }
+            .main-nav a::after {
+                display: none;
+            }
+            
+            .blog-section h1 {
+                font-size: 1.8em;
+            }
+            
+            .blog-post-title {
+                font-size: 1.2em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                font-size: 15px;
+            }
+            
+            .profile-pic-container {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .site-title {
+                font-size: 1.1em;
+            }
+            
+            .main-nav {
+                gap: 8px;
+            }
+            
+            .main-nav a {
+                margin: 0 5px;
+                font-size: 0.85em;
+            }
+            
+            .blog-section h1 {
+                font-size: 1.6em;
+            }
+            
+            .blog-post-title {
+                font-size: 1.1em;
+            }
+            
+            .sidebar-links {
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-wrapper">
+        <header class="top-header">
+            <a href="index.html" class="logo">
+    <div class="logo-icon">L</div>
+    <span>Lokesh Taduri</span>
+</a>
+            
+            <nav class="main-nav">
+                <a href="publications.html">Publications</a>
+                <a href="blogs.html">Blog</a>
+                <a href="docs/lokesh-resume.pdf" target="_blank">CV</a>
+            </nav>
+        </header>
+    </div>
+
+    <div class="content-wrapper">
+        
+        <aside class="sidebar">
+            <div class="profile-card">
+                
+                <div class="profile-pic-container">
+                    <img src="images/profile.jpg" alt="Lokesh Taduri Profile Picture" onerror="this.src='https://via.placeholder.com/240/0073e6/ffffff?text=LT'">
+                </div>
+                <ul class="sidebar-links">
+                    <li><i class="fas fa-map-marker-alt"></i> Worcester, Massachusetts, USA</li>
+                    <li><i class="fas fa-graduation-cap"></i> Clark University</li>
+                    <li><i class="fab fa-google"></i> <a href="mailto:Lokeshthaduri1@gmail.com">Gmail</a></li>
+                    <li><i class="fab fa-github"></i> <a href="https://github.com/LokeshTaduri1">GitHub</a></li>
+                    <li><i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/lokesh-taduri/">LinkedIn</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            
+            <section class="blog-section">
+                <h1>Blog</h1>
+
+                <!-- Blog Post 1 -->
+                <article class="blog-post">
+                    <h2 class="blog-post-title">
+                        <a href="blog-acadia.html">Maine Diaries: Conquering Cadillac Mountain</a>
+                    </h2>
+                    <p class="blog-post-meta">May 21, 2025</p>
+                    <p class="blog-post-excerpt">This summer, I finally made it to Acadia National Park in Maine, U.S.A. And believe me, it was just awesome!</p>
+                </article>
+                
+                <!-- Blog Post 2 -->
+                <article class="blog-post">
+                    <h2 class="blog-post-title">
+                        <a href="blog-india.html">Hampi and the Mountains: Simple Tips for Summer Travel</a>
+                    </h2>
+                    <p class="blog-post-meta">Jun 2, 2024</p>
+                    <p class="blog-post-excerpt">Last summer, I took a big trip to India right when it was hot. One place I knew I had to check out was Hampi, and honestly, it was incredible.</p>
+                </article>
+
+                <!-- Blog Post 3 -->
+                <article class="blog-post">
+                    <h2 class="blog-post-title">
+                        <a href="blog-bias.html">The Hidden Problem of Biased Data in AI</a>
+                    </h2>
+                    <p class="blog-post-meta">Nov 8, 2023</p>
+                    <p class="blog-post-excerpt">We all know that data science and AI are based on data. But what happens if the data we feed the AI is already unfair or prejudiced?</p>
+                </article>
+
+                <!-- Blog Post 4 -->
+                <article class="blog-post">
+                    <h2 class="blog-post-title">
+                        <a href="blog-siphon.html">Building a Simple Siphon with Just a Pipe!</a>
+                    </h2>
+                    <p class="blog-post-meta">Feb 4, 2023</p>
+                    <p class="blog-post-excerpt">I recently figured out a simple, unique science hack that felt totally like magic: making water flow uphill!</p>
+                </article>
+
+                <!-- Add more blog posts here as needed -->
+                
+            </section>
+
+        </main>
+    </div>
+</body>
+</html>
